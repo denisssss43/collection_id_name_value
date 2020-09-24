@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Deployment.Internal;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic; 
+using System.Linq; 
 using System.Threading.Tasks;
 
 namespace Main
@@ -15,8 +13,8 @@ namespace Main
 	/// <typeparam name="NAME">Тип name-части составного ключа элемента коллекции</typeparam>
 	/// <typeparam name="T">Тип значения элемента коллекции</typeparam>
 	public class Collection<ID, NAME, T> : ICollection
-		where ID: struct
-		where NAME: struct
+		where ID : struct
+		where NAME : struct 
 	{
 		public Collection()
 		{
@@ -140,7 +138,7 @@ namespace Main
 		{
 			lock (arr)
 			{
-				try 
+				try
 				{
 					switch (searchType)
 					{
@@ -159,7 +157,7 @@ namespace Main
 					throw new InvalidOperationException(e.Message, e);
 				}
 			}
-		}
+		} 
 		/// <summary>
 		/// Отчистка коллекции
 		/// </summary>
@@ -261,7 +259,7 @@ namespace Main
 			public ID id;
 			public NAME name;
 			public T value;
-		}
+		} 
 	}
 	/// <summary>
 	/// Тип ключа по которому будет осуществляться поиск
@@ -292,11 +290,28 @@ namespace Main
 			collection.Add(1, new User { name = "ДА", first = "ДА" }, "Привет");
 			collection.Add(1, new User { name = "НЕТ" }, "Привет");
 			collection.Add(2, new User { name = "ДА" }, "Привет");
-			collection.Add(2, new User { name = "НЕТ" }, "Привет"); 
+			collection.Add(2, new User { name = "НЕТ" }, "Привет");
+
+			// Проверка вывода элемента 
+			Console.WriteLine("Проверка вывода элемента: ");
+			var id = 1;
+			var name = new User { name = "НЕТ" }; 
+			Console.WriteLine(
+				string.Format("ID:{0,-8} NAME:{1,-8:f4} VALUE:{2,-8:f4}\n",
+				id.ToString(),
+				name.name.ToString(),
+				collection[id, name].ToString()));
 
 
 			// вывод по ключу Name 
-			collection.GetCollectionByKey(EKeySearchType.Name, new User { name = "ДА" }).ToList().ForEach(i => 
+			Console.WriteLine("Вывод по ключу Name: ");
+			collection.GetCollectionByKey(EKeySearchType.Name, new User { name = "ДА" }).ToList().ForEach(i =>
+				Console.WriteLine(string.Format("ID:{0,-8} NAME:{1,-8:f4} VALUE:{2,-8:f4}\n", i.id.ToString(), i.name.name.ToString(), i.value.ToString()))
+			);
+
+			// вывод по ключу Id 
+			Console.WriteLine("Вывод по ключу Id: ");
+			collection.GetCollectionByKey(EKeySearchType.Id, 1).ToList().ForEach(i =>
 				Console.WriteLine(string.Format("ID:{0,-8} NAME:{1,-8:f4} VALUE:{2,-8:f4}\n", i.id.ToString(), i.name.name.ToString(), i.value.ToString()))
 			);
 
